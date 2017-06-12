@@ -9,58 +9,58 @@ endif
 
 syn sync fromstart
 
+" Keywords
+syn keyword touistKeyword if then else end bigand bigor diff inter union mod in
+syn keyword touistKeyword exists forall and or not
+syn keyword touistType let nextgroup=touistLabel skipwhite
 
-syn match gmplArithmeticSetOperator "\.\."
+syn match touistArithmeticSetOperator "\.\."
 
 " Integer with - + or nothing in front
-syn match gmplNumber '\d\+'
-syn match gmplNumber '[-+]\d\+'
+syn match touistNumber '\d\+'
+syn match touistNumber '[-+]\d\+'
 
-" Floating point gmplNumber with decimal no E or e (+,-)
-syn match gmplNumber '\d*\.\d\+'
-syn match gmplNumber '[-+]\d*\.\d\+'
+" Floating point touistNumber with decimal no E or e (+,-)
+syn match touistNumber '\d*\.\d\+'
+syn match touistNumber '[-+]\d*\.\d\+'
 
-" Floating point like gmplNumber with E and no decimal point (+,-)
-syn match gmplNumber '[-+]\=\d[[:digit:]]*[eE][\-+]\=\d\+'
-syn match gmplNumber '\d[[:digit:]]*[eE][\-+]\=\d\+'
+" Floating point like touistNumber with E and no decimal point (+,-)
+syn match touistNumber '[-+]\=\d[[:digit:]]*[eE][\-+]\=\d\+'
+syn match touistNumber '\d[[:digit:]]*[eE][\-+]\=\d\+'
 
-" Floating point like gmplNumber with E and decimal point (+,-)
-syn match gmplNumber '[-+]\=\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
-syn match gmplNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
-syn match gmplIndex   /\<\%(in\>\)\@!\w*/ contained contains=gmplKeyword,gmplNumber
-syn match gmplLabel  '[a-zA-Z][a-zA-Z0-9_]*'
-syn match gmplArithmeticOperator	"[-+]"
-syn match gmplArithmeticOperator	"\.\=[*/\\^]"
-syn match gmplRelationalOperator	"[=~]="
-syn match gmplRelationalOperator	"[<>]=\="
-" syn match gmplLogicalOperator		"[&|~]
+" Floating point like touistNumber with E and decimal point (+,-)
+syn match touistNumber '[-+]\=\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
+syn match touistNumber '\d[[:digit:]]*\.\d*[eE][\-+]\=\d\+'
+syn match touistVariable /\$[a-zA-Z0-9_]+/
+syn match touistIndex   /\<\%(in\>\)\@!\w*/ contained contains=touistKeyword,touistNumber
+syn match touistLabel  '[a-zA-Z][a-zA-Z0-9_]*()'
+syn match touistArithmeticOperator	"[-+]"
+syn match touistArithmeticOperator	"\.\=[*/\\^]"
+syn match touistRelationalOperator	"[=~]="
+syn match touistRelationalOperator	"[<>]=\="
+syn match touistLogicalOperator		"[&|~]"
 
 " match indeces
 
 " comments
-syn match gmplComment /\/\*.\{-}\*\//
-syn region gmplComment start="/\*"  end="\*/"
-syn match gmplComment '#.\{-}$'
+syn match touistComment ';;.\{-}$'
 
 " strings
-syn region gmplString start="\"" end="\""
-syn region gmplString start="\'" end="\'" contains=gmplStringToken
-syn match gmplStringToken '\%[a-z]' contained
+syn region touistString start=/[a-zA-Z_]+(/ end=")" transparent
+syn region touistString start="\'" end="\'" contains=touistStringToken
+syn match touistStringToken '\%[a-z]' contained
 
-" Keywords
-syn keyword gmplKeyword and else by if cross in diff inter div less mod union not within or symdiff then 
-syn keyword gmplKeyword minimize maximize solve
-syn keyword gmplType set var param nextgroup=gmplLabel skipwhite
 
 " Regions
-syn region gmplIndexExpression start="{" end="}" transparent contains=gmplIndex,gmplIndexExpression
-syn region gmplIndexGroup start="\[" end="\]" transparent contains=gmplIndex
-" syn region gmplParen start="(" end=")"  
+"syn region touistBigOp start="big\(and\|or\)" end="end" transparent contains=touist,touistBigOp
+syn match touistBigand 'bigand'
+syn region touistIndexGroup start="\[" end="\]" transparent contains=touistIndex
+" syn region touistParen start="(" end=")"
 
 "" catch errors caused by wrong parenthesis
-syn match   gmplParensError    ")\|}\|\]"
-syn match   gmplParensErrA     contained "\]"
-syn match   gmplParensErrC     contained "}"
+syn match   touistParensError    ")\|}\|\]"
+syn match   touistParensErrA     contained "\]"
+syn match   touistParensErrC     contained "}"
 
 
 hi level1c  ctermfg=brown       guifg=brown              
@@ -99,20 +99,20 @@ syn region level13 matchgroup=level13c start=/(/ end=/)/ contains=TOP,level13,le
 syn region level14 matchgroup=level14c start=/(/ end=/)/ contains=TOP,level14,level15, NoInParens
 syn region level15 matchgroup=level15c start=/(/ end=/)/ contains=TOP,level15, NoInParens
 
-let b:current_syntax = "gmpl"
+let b:current_syntax = "touist"
 
-hi def link gmplKeyword Keyword
-hi def link gmplParensError Error
-hi def link gmplParensErrA Error
-hi def link gmplParensErrB Error
-hi def link gmplParensErrC Error
-" hi def link gmplIndexExpression Label
-" hi def link gmplParen Label
-" hi def link gmplIndexGroup Label
-hi def link gmplIndex Identifier
-hi def link gmplNumber Number
-hi def link gmplComment Comment
-hi def link gmplType Type
-hi def link gmplLabel Keyword
-hi def link gmplString String
-hi def link gmplStringToken Special 
+hi def link touistKeyword Keyword
+hi def link touistParensError Error
+hi def link touistParensErrA Error
+hi def link touistParensErrB Error
+hi def link touistParensErrC Error
+" hi def link touistBigOp Label
+" hi def link touistParen Label
+" hi def link touistIndexGroup Label
+hi def link touistVariable Identifier
+hi def link touistNumber Number
+hi def link touistComment Comment
+hi def link touistType Type
+hi def link touistLabel Keyword
+hi def link touistString String
+hi def link touistStringToken Special 
