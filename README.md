@@ -6,7 +6,9 @@ Support for syntax highlight for the [touist] language in Vim.
 
 Installation
 ============
+
 With `vundle`, use the in-vim command `:Plugin 'touist/touist-vim'`
+
 Without `vundle`, copy the content of each folder `syntax` and `ftdetect` into your `~/.vim` folder.
 
 Usage
